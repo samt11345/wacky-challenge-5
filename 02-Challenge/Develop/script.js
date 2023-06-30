@@ -2,6 +2,21 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+  $(document).ready(function() {
+    var today=dayjs().format("M/D/YYYY")
+    //6/30/2023
+    $('#currentDay').text(today);
+});
+var notes=JSON.parse(localStorage.getItem("note")) || {}
+$(".saveBtn").on("click",function(){
+  var note=$(this).siblings("textarea").val()
+  var hour=$(this).parent().attr("id")
+  notes[hour]=note
+  localStorage.setItem("note",JSON.stringify(notes))
+
+})
+
+console.log(notes)
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
