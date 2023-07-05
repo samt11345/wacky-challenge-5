@@ -16,7 +16,36 @@ $(".saveBtn").on("click",function(){
 
 })
 
+var notes = JSON.parse(localStorage.getItem("note")) || {};
+for (var hour in notes) {
+  $("#" + hour + " textarea").val(notes[hour]);
+}
+
+
 console.log(notes)
+
+function updateBoxClasses() {
+  const boxes = document.querySelectorAll('.time-block');
+  const currentTime = dayjs().hour();
+
+  boxes.forEach((box, index) => {
+      const hour = index + 9;
+      // box.textContent = ${hour};
+
+      // box.className = '';
+
+      if (currentTime === hour) {
+          box.classList.add('present');
+      } else if (currentTime > hour) {
+          box.classList.add('past');
+      } else {
+          box.classList.add('future');
+      }
+  });
+}
+
+updateBoxClasses();
+setInterval(updateBoxClasses, 60000);
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
